@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainView from '@/views/MainView'
-// import DetailView from '@/views/DetailView'
+import DetailView from '@/views/DetailView'
 
 Vue.use(VueRouter)
 
@@ -11,11 +11,11 @@ const routes = [
     name: 'main',
     component: MainView
   },
-  // {
-  //   path: '/detail/:title',
-  //   name: 'detail',
-  //   component: DetailView
-  // },
+  {
+    path: '/detail/:id',
+    name: 'detail',
+    component: DetailView
+  },
   // {
   //   path: '/watch-list',
   //   name: 'watchs',
