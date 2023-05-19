@@ -27,13 +27,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    # 'rest_framework',
     'movies',
     'accounts',
+    
+    'rest_framework',
+    
+    # CORS policy
+    #'corsheaders', #프론트랑 연결하려면 이거 주석 해제
+    
+    # Auth
+    'rest_framework.authtoken', #토큰인증
+    'dj_rest_auth',  #회원가입 지원
+    
+    # registration
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,15 +57,46 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+REST_AUTH = { #회원가입시 토큰 발급
+    'SESSION_LOGIN': False,
+}
+
+SITE_ID = 1 #해당 사이트가 많은 경우 site번호는 1이다.
+
+
+REST_FRAMEWORK = {
+    #Authentication (인증)
+    'DEFAULT_AUTHENTICATION_CLASSES' :[
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    
+    # permission
+	'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated', #로그인 꼭 필요
+        'rest_framework.permissions.AllowAny', #로그인 안해도 읽을 순 있음
+    ]
+}
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',#CORS
+    
+    'django.middleware.security.SecurityMiddleware', #보안
+    'django.contrib.sessions.middleware.SessionMiddleware', #세션처리
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+#vue 연결하려면 이거 주석제거하면 됨
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8080',
+# ]
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
 
 ROOT_URLCONF = 'cinebucks.urls'
 
