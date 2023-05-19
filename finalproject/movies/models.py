@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Movie(models.Model) : 
-    title = models.TextField()
+    title = models.CharField(max_length=100)
     overview = models.TextField()
     adult = models.BooleanField()
     poster_path = models.TextField()
@@ -16,4 +16,4 @@ class Comment(models.Model):
     comment_content = models.TextField()
     rating = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
-    #user_id
+    

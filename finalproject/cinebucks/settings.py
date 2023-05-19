@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'rest_framework',
     
     # CORS policy
-    #'corsheaders', #프론트랑 연결하려면 이거 주석 해제
+    'corsheaders', #프론트랑 연결하려면 이거 주석 해제
     
     # Auth
     'rest_framework.authtoken', #토큰인증
@@ -91,11 +91,11 @@ MIDDLEWARE = [
 ]
 
 #vue 연결하려면 이거 주석제거하면 됨
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:8080',
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+]
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 ROOT_URLCONF = 'cinebucks.urls'
