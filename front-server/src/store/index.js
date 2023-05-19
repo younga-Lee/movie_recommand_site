@@ -17,8 +17,8 @@ export default new Vuex.Store({
     GET_DATA(state, movies){
       state.boxoffieList = movies
     },
-    GET_TOP(state, movies){
-      state.toprateList = movies
+    GET_TOP(state, tops){
+      state.toprateList = tops
     },
   },
   actions: {
