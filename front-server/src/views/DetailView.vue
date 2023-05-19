@@ -36,6 +36,7 @@ export default {
   methods: {    
     getDetail() {
       const movie_id = Number(this.id)
+      // console.log(movie_id)
 
       axios({
         method: 'get',
@@ -43,7 +44,7 @@ export default {
         params: {language: 'ko'},
       })
       .then((res) => {
-        // console.log(res.data)
+        console.log(res.data)
         this.movie = res.data
         // this.getVideo()
       })
