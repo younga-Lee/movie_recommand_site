@@ -11,14 +11,14 @@
           <h2 style="font-weight: bold">{{ movie.title }}</h2>
           <p>
             <span>평점 : ★{{ (movie.vote_average / 2).toFixed(1) }}</span> • 
-            <span>{{ genres ? genres[0].name : '' }}/{{ genres ? genres[1].name : '' }}/{{ genres ? genres[2].name : '' }}</span>
+            <span>{{ genres ? genres[0]?.name : '' }}/{{ genres ? genres[1]?.name : '' }}/{{ genres ? genres[2]?.name : '' }}</span>
           </p>
           <p>줄거리</p>
           <p class="overview">{{ movie.overview }}</p>
         </div>
         <div class="col" id="trailer">
           <!-- <img :src="thumbUrl" alt="" @click="popVideo"> -->
-          <iframe :src="videourl + videoId" frameborder="0" height="200" width="300">영상</iframe>
+          <!-- <iframe :src="videourl + videoId" frameborder="0" height="200" width="300">영상</iframe> -->
 
         </div>
       </div>
