@@ -6,19 +6,21 @@
           <img src="@/assets/title.png" alt="main">
         </router-link>
       <div class="container-fluid">
-        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button> -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <form class="d-flex" role="search" @submit="searchMovie">
               <input v-model="searchword" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <div class="float-end">
+            <div class="float-end" v-if="!token">
               <router-link to="/login" id="link">Login</router-link> 
               <router-link to="/signup" id="link">Signup</router-link>
-              <router-link to="/profile" id="link">
+            </div>
+            <div class="float-end" v-else>
+              <button @click="logout">Logout</button>
+              <span>{{ username }}</span>
+              <!-- <router-link @click="logout" id="link">Logout</router-link> -->
+              <router-link :to="{name: 'profile', params: {username : username}}" id="link">
                 <img src="@/assets/profile.png" alt="profile">
               </router-link>
             </div>
@@ -41,8 +43,25 @@ export default {
   methods: { 
     searchMovie() {
       const word = this.searchword
-      this.$router.push({name: 'search', params: {word: word}})
-      this.searchword = null
+      console.log(word)
+
+      if (word) {
+        this.$router.push({name: 'search', params: {word: word}})
+        this.searchword = null
+      } else {
+        alert('검색어를 입력해주세요')
+      }
+    },
+    logout() {
+      this.$store.dispatch('logout')
+    }
+  }, 
+  computed: {
+    token() {
+      return this.$store.state.token
+    },
+    username() {
+      return this.$store.state.username
     }
   }
 }
