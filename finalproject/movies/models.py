@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-# Create your models here.
+
 class Movie(models.Model) : 
     title = models.CharField(max_length=100)
     overview = models.TextField()
@@ -13,7 +13,8 @@ class Movie(models.Model) :
 
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     comment_content = models.TextField()
     rating = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    

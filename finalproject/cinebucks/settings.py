@@ -83,6 +83,7 @@ MIDDLEWARE = [
     
     'django.middleware.security.SecurityMiddleware', #보안
     'django.contrib.sessions.middleware.SessionMiddleware', #세션처리
+    
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
