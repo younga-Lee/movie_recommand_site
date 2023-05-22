@@ -17,7 +17,6 @@
           <p class="overview">{{ movie.overview }}</p>
         </div>
         <div class="col" id="trailer">
-          <!-- <img :src="thumbUrl" alt="" @click="popVideo"> -->
           <!-- <iframe :src="videourl + videoId" frameborder="0" height="200" width="300">영상</iframe> -->
 
         </div>
