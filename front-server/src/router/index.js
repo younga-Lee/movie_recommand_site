@@ -26,7 +26,7 @@ const routes = [
     component: SignupView
   },
   {
-    path: '/profile',
+    path: '/profile/:username',
     name: 'profile',
     component: ProfileView
   },
