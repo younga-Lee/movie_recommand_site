@@ -6,17 +6,21 @@
     :videoId="videoId"
     :thumbUrl="thumbUrl"
     />
+    <br><br>
+    <MovieRated />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import MovieDetail from '@/components/DetailView/MovieDetail'
+import MovieRated from '@/components/DetailView/MovieRated'
 
 export default {
   name: 'DetailView',
   components: {
-    MovieDetail
+    MovieDetail,
+    MovieRated
   },
   data() {
     return {

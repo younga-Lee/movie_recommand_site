@@ -11,8 +11,8 @@
     <br><br>
     <h1># 다른 사람들이 즐긴 영화</h1>
     <div class="container">
-      <TopCard 
-      v-for="movie in topmovies"
+      <PopCard 
+      v-for="movie in popularmovies"
       :key="movie.id"
       :movie="movie"
       />
@@ -22,7 +22,7 @@
 
 <script>
 import BoxCard from '@/components/MainView/BoxCard'
-import TopCard from '@/components/MainView/TopCard'
+import PopCard from '@/components/MainView/PopCard'
 
 export default {
   name: 'MovieView',
@@ -30,26 +30,26 @@ export default {
     getBox() {
       this.$store.dispatch('getBox')
     },
-    getTop() {
-      this.$store.dispatch('getTop')
+    getPop() {
+      this.$store.dispatch('getPop')
     },
   },
   created() {
     this.getBox()
-    this.getTop()
+    this.getPop()
   },
   computed: {
     boxmovies() {
       return this.$store.state.boxoffieList
     },
-    topmovies() {
-      return this.$store.state.toprateList
+    popularmovies() {
+      return this.$store.state.popularList
     },
 
   },
   components: {
     BoxCard,
-    TopCard
+    PopCard
   }
 }
 </script>

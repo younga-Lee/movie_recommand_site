@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     boxoffieList : [],
-    toprateList : [],
+    popularList : [],
     TMDB_API_KEY : process.env.VUE_APP_TMDB_API_KEY,
   },
   getters: {
@@ -17,8 +17,8 @@ export default new Vuex.Store({
     GET_DATA(state, movies){
       state.boxoffieList = movies
     },
-    GET_TOP(state, tops){
-      state.toprateList = tops
+    GET_POP(state, pops){
+      state.popularList = pops
     },
   },
   actions: {
@@ -37,16 +37,16 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    getTop(context) {
+    getPop(context) {
       
       axios({
         method: 'get',
-        url : `https://api.themoviedb.org/3/movie/top_rated?api_key=${this.state.TMDB_API_KEY}`,
+        url : `https://api.themoviedb.org/3/movie/popular?api_key=${this.state.TMDB_API_KEY}`,
       })
       
       .then((res) => {
         // console.log(res.data.results)
-        context.commit('GET_TOP', res.data.results)
+        context.commit('GET_POP', res.data.results.slice(0, 18))
       })
       .catch((err) => {
         console.log(err)

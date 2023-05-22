@@ -4,6 +4,8 @@ import MainView from '@/views/MainView'
 import DetailView from '@/views/DetailView'
 import LoginView from '@/views/LoginView'
 import SignupView from '@/views/SignupView'
+import ResearchResultView from '@/views/ResearchResultView'
+import ProfileView from '@/views/ProfileView'
 
 Vue.use(VueRouter)
 
@@ -24,9 +26,19 @@ const routes = [
     component: SignupView
   },
   {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView
+  },
+  {
     path: '/detail/:id',
     name: 'detail',
     component: DetailView
+  },
+  {
+    path: '/search/:word',
+    name: 'search',
+    component: ResearchResultView
   },
   
 ]
