@@ -1,14 +1,16 @@
 <template>
   <div>
-    <form id="loginform">
+    <form id="loginform" @submit.prevent="login">
       <div class="row mb-3">
-        <label for="inputEmail4" class="form-label">ID</label>
-        <input type="email" class="form-control" id="inputEmail4">
+        <label for="username" class="form-label">username</label>
+        <input type="text" class="form-control" id="username" v-model="username">
       </div>
+
       <div class="row mb-3">
-        <label for="inputPassword4" class="form-label">Password</label>
-        <input type="password" class="form-control" id="inputPassword4">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" v-model="password">
       </div>
+
       <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
   </div>
@@ -16,7 +18,25 @@
 
 <script>
 export default {
-  name: 'LoginView'
+  name: 'LoginView',
+  data() {
+    return {
+      username: null,
+      password: null,
+    }
+  },
+  methods: {
+    login() {
+      const username = this.username
+      const password = this.password
+
+      const payload = {
+        username, password
+      }
+
+      this.$store.dispatch('login', payload)
+    }
+  }
 }
 </script>
 

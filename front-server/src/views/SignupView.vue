@@ -6,27 +6,32 @@
         회원가입
       </h1>
       <div class="col-md-4">
-        <label for="validationDefaultUsername" class="form-label">Username</label>
-        <input type="text" class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" required>
+        <label for="username" class="form-label">Username : </label>
+        <input type="text" class="form-control" id="username" v-model="username"
+        aria-describedby="inputGroupPrepend2" required>
       </div>
-      <div class="col-md-6">
+
+      <!-- <div class="col-md-6">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email">
-      </div>
+        <input type="email" class="form-control" id="email" v-model="email">
+      </div> -->
+
       <div class="col-12">
         <label for="inputpassword" class="form-label">Password</label>
         <input
-        v-model="password" @input="lengthCheck" 
+        v-model="password1" @input="lengthCheck" 
         type="password" class="form-control" 
         id="inputpassword" placeholder="password">
         <p v-if="!long">비밀번호를 4자리 이상 입력해주세요</p>
       </div>
+
       <div class="col-12">
-        <label for="checkpassword" class="form-label">Password Check</label>
-        <input v-model="checkpassword" type="password" class="form-control" id="checkpassword" placeholder="password">
+        <label for="password2" class="form-label">Password Check</label>
+        <input v-model="password2" type="password" class="form-control" id="password2" placeholder="password">
       </div>
+      
       <div class="col-12" id="sbmbtn">
-        <button type="submit" class="btn btn-success">Sign in</button>
+        <button type="submit" class="btn btn-success">Sign Up</button>
       </div>
     </form>    
   </div>
@@ -37,24 +42,36 @@ export default {
   name: 'SignupView',
   data() {
     return {
-      password: null,
-      checkpassword: null,
+      username: null,
+      // email: null,
+      password1: null,
+      password2: null,
       long: '',
     }
   },
   methods: {
     lengthCheck() {
-      if (this.password.length < 5) {
+      if (this.password1.length < 5) {
         this.long = false
       } else {
         this.long = true
       }
     },
     signUp() {
-      if (this.password != this.checkpassword) {
+      const username = this.username
+      // const email = this.email
+      const password1 = this.password1
+      const password2 = this.password2
+
+      if (this.password1 != this.password2) {
         alert('비밀번호를 다시 확인해주세요')
       } else {
-        this.$router.push({name: 'main'})
+        const payload = {
+          username, password1, password2
+        }
+        
+        this.$store.dispatch('signUp', payload)
+        // this.$router.push({name: 'main'})
       }
     }
   }

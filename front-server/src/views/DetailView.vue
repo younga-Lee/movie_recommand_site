@@ -48,7 +48,7 @@ export default {
         params: {language: 'ko'},
       })
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         this.movie = res.data
         // this.getVideo()
       })
