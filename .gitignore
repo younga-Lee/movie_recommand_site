@@ -17,6 +17,27 @@ media
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
+# Created by https://www.toptal.com/developers/gitignore/api/git,vue,python
+# Edit at https://www.toptal.com/developers/gitignore?templates=git,vue,python
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
 *.py[cod]
 *$py.class
 
@@ -70,8 +91,18 @@ cover/
 
 # Translations
 *.mo
+<<<<<<< HEAD
 
 # Django stuff:
+=======
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+>>>>>>> 133d8e38d1b3324aec9e7e89d528057a5a7c6656
 
 # Flask stuff:
 instance/
@@ -171,6 +202,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+<<<<<<< HEAD
 ### Python ###
 # Byte-compiled / optimized / DLL files
 
@@ -253,6 +285,8 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 
+=======
+>>>>>>> 133d8e38d1b3324aec9e7e89d528057a5a7c6656
 ### Python Patch ###
 # Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
 poetry.toml
@@ -263,6 +297,7 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+<<<<<<< HEAD
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -309,3 +344,17 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,django,windows
+=======
+### Vue ###
+# gitignore template for Vue.js projects
+#
+# Recommended template: Node.gitignore
+
+# TODO: where does this rule come from?
+docs/_book
+
+# TODO: where does this rule come from?
+test/
+
+# End of https://www.toptal.com/developers/gitignore/api/git,vue,python
+>>>>>>> 133d8e38d1b3324aec9e7e89d528057a5a7c6656
