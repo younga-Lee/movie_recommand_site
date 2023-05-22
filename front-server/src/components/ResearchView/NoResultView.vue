@@ -8,7 +8,7 @@
     <div class="row row-cols-3 row-cols-md-4 g-4">
       <div class="col" v-for="movie in popularList" :key="movie.id">
         <img :src="imgurl + movie.poster_path" class="card-img-top" alt="poster"
-        id="posterimg">
+        id="posterimg" @click="goDetail(movie.id)">
       </div>
     </div>    
   </div>
@@ -30,6 +30,11 @@ export default {
     getPop() {
       this.$store.dispatch('getPop')
     },
+    goDetail(id) {
+      console.log(id)
+      // this.$router.push({name: 'main'})
+      this.$router.push({name: 'detail', params: {id:id}})
+    },   
   },
   created() {
     this.getPop()
