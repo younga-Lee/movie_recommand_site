@@ -14,8 +14,9 @@ export default new Vuex.Store({
     createPersistedState(),
   ],
   state: {
+    basemovies: [],
     boxoffieList : [],
-    popularList : [],
+    // popularList : [],
     TMDB_API_KEY : process.env.VUE_APP_TMDB_API_KEY,
     token: null,
     username: null,
@@ -24,15 +25,22 @@ export default new Vuex.Store({
     isLogin(state) {
       // 토큰의 유무로 로그인 확인
       return state.token ? true : false
-    }
+    },
+    popularList(state) {
+      // vote_average 높은 순으로 정렬한 배열 반환
+      return state.basemovies.slice().sort((a, b) => b.vote_average - a.vote_average) 
+    },
   },
   mutations: {
+    GET_MOVIES(state, movies) {
+      state.basemovies = movies
+    },
     GET_DATA(state, movies){
       state.boxoffieList = movies
     },
-    GET_POP(state, pops){
-      state.popularList = pops
-    },
+    // GET_POP(state, pops){
+    //   state.popularList = pops
+    // },
     SAVE_TOKEN(state, token) {
       // 로컬스토리지 사용
       state.token = token
@@ -49,11 +57,27 @@ export default new Vuex.Store({
     }  
   },
   actions: {
+    getMovies(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/api/v1/movies/`,
+        // headers: {
+        //   Authorization: `Token ${context.state.token}`
+        // }
+      })
+      .then((res) => {
+        // console.log(res.data)
+        context.commit('GET_MOVIES', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
     getBox(context) {
       
       axios({
         method: 'get',
-        url : `https://api.themoviedb.org/3/movie/now_playing?api_key=${this.state.TMDB_API_KEY}`,
+        url : `https://api.themoviedb.org/3/movie/now_playing?api_key=${this.state.TMDB_API_KEY}&page=1&language=ko&region=KR`,
       })
       
       .then((res) => {
@@ -64,41 +88,43 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    getPop(context) {
+    // getPop(context) {
       
-      axios({
-        method: 'get',
-        url : `https://api.themoviedb.org/3/movie/popular?api_key=${this.state.TMDB_API_KEY}`,
-        headers: {
-          Authorization: `Token ${context.state.token}`
-        }
-      })
+    //   axios({
+    //     method: 'get',
+    //     url : `https://api.themoviedb.org/3/movie/popular?api_key=${this.state.TMDB_API_KEY}`,
+    //     headers: {
+    //       Authorization: `Token ${context.state.token}`
+    //     }
+    //   })
       
-      .then((res) => {
-        // console.log(res.data.results)
-        context.commit('GET_POP', res.data.results.slice(0, 18))
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
+    //   .then((res) => {
+    //     // console.log(res.data.results)
+    //     context.commit('GET_POP', res.data.results.slice(0, 18))
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
     signUp(context, payload) {
       // console.log('1')
       // console.log(payload)
       const username = payload.username
       const password1 = payload.password1
       const password2 = payload.password2
+      const file = payload.file
 
       axios({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, password1, password2
+          username, password1, password2, file
         }
       })
       .then((res) => {
         // console.log('2')
         // console.log(res)
+        this.state.username = username
         context.commit('SAVE_TOKEN', res.data.key)
       }) 
       .catch((err) => {
