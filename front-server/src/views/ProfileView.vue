@@ -3,8 +3,8 @@
     <div class="header">
       <img src="@/assets/profile.png" alt="profile" id="profileimg">
       <div>
-        <p>nickname</p>
-        <p>follower 2.3k  followings 0</p>
+        <p>{{ username }}</p>
+        <p>follower 2.3k  followings 3</p>
       </div>
     </div>
     <div id="wishlist" class="border">
@@ -18,7 +18,12 @@
 
 <script>
 export default {
-  name: 'ProfileView'
+  name: 'ProfileView',
+  computed: {
+    username() {
+      return this.$route.params.username
+    },    
+  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="row g-3" id="signupform" @submit.prevent="signUp">
+    <form class="row g-3" id="signupform" @submit.prevent="signUp" enctype="multipart/form-data">
       <h1>
         <img src="@/assets/coffee.png" alt="logo">
         회원가입
@@ -30,6 +30,11 @@
         <input v-model="password2" type="password" class="form-control" id="password2" placeholder="password">
       </div>
       
+      <div class="col-12">
+        <label for="image"></label>
+        <input type="file" id="image" class="form-control" aria-label="file example" v-on:change="fileUpload">
+      </div>
+
       <div class="col-12" id="sbmbtn">
         <button type="submit" class="btn btn-success">Sign Up</button>
       </div>
@@ -46,6 +51,7 @@ export default {
       // email: null,
       password1: null,
       password2: null,
+      file: null,
       long: '',
     }
   },
@@ -57,23 +63,27 @@ export default {
         this.long = true
       }
     },
+    fileUpload(event) {
+      this.file = event.target.files[0];
+    },
     signUp() {
       const username = this.username
       // const email = this.email
       const password1 = this.password1
       const password2 = this.password2
+      const file = this.file
 
       if (this.password1 != this.password2) {
         alert('비밀번호를 다시 확인해주세요')
       } else {
         const payload = {
-          username, password1, password2
+          username, password1, password2, file
         }
         
         this.$store.dispatch('signUp', payload)
         // this.$router.push({name: 'main'})
       }
-    }
+    },
   }
 }
 </script>
