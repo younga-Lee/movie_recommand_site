@@ -18,10 +18,10 @@
             </div>
             <div class="float-end" v-else>
               <button @click="logout">Logout</button>
-              <span>{{ username }}</span>
               <!-- <router-link @click="logout" id="link">Logout</router-link> -->
               <router-link :to="{name: 'profile', params: {username : username}}" id="link">
                 <img src="@/assets/profile.png" alt="profile">
+                <span>{{ username }}</span>
               </router-link>
             </div>
           </ul>
