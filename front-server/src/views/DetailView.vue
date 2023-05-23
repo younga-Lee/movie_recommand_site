@@ -7,11 +7,16 @@
     :thumbUrl="thumbUrl"
     />
     <br><br>
-    <MovieRated />
+    <MovieRated 
+    :movie="movie"
+    :comments="commentList"
+    />
   </div>
 </template>
 
 <script>
+const API_URL = 'http://127.0.0.1:8000'
+
 import axios from 'axios'
 import MovieDetail from '@/components/DetailView/MovieDetail'
 import MovieRated from '@/components/DetailView/MovieRated'
@@ -35,7 +40,10 @@ export default {
   computed: {
     id() {
       return this.$route.params.id
-    } 
+    },
+    commentList() {
+      return this.movie.comment_set
+    }
   },
   methods: {    
     getDetail() {
@@ -44,8 +52,9 @@ export default {
 
       axios({
         method: 'get',
-        url: `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${this.TMDB_API_KEY}`,
-        params: {language: 'ko'},
+        url: `${API_URL}/api/v1/movies/${movie_id}`
+        // url: `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${this.TMDB_API_KEY}`,
+        // params: {language: 'ko'},
       })
       .then((res) => {
         // console.log(res.data)
@@ -84,7 +93,7 @@ export default {
         }
       })
       .then((response) => {
-        console.log(response.data.items[0])
+        // console.log(response.data.items[0])
         this.videoId = response.data.items[0].id.videoId
         this.thumbUrl = response.data.items[0].snippet.thumbnails.default.url
         // this.url = `https://www.youtube.com/embed/${videoId}`
