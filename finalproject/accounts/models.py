@@ -5,3 +5,5 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     image = models.ImageField(upload_to='media/', blank=True, default='profile.png')
     followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+
+
