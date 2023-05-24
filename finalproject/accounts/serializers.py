@@ -5,7 +5,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('username','image',)
+        fields = ('username','image', 'followings', 'id')
+        # fields = '__all__'
         
         
 class UserFollowSerailizer(serializers.ModelSerializer):
