@@ -2,12 +2,13 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from django.contrib.auth import get_user_model
 
 from rest_framework.decorators import permission_classes 
 from rest_framework.permissions import IsAuthenticated #로그인 해야만 가능
 
 from .models import Movie, Genre, Comment
-from .serializers import MovieListSerializer, MovieDetailSerializer, GenreListSerializer, CommentSerializer
+from .serializers import MovieListSerializer, MovieDetailSerializer, GenreListSerializer, CommentSerializer, MovieLikeSerializer
 
 
 #전체 영화 리스트 
@@ -72,5 +73,12 @@ def comment_detail(request, comment_pk):
             serializer.save()
             return Response(serializer.data)
 
-
-    
+# #좋아요한 영화목록   
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def likes(request, movie_id):
+#     movie = get_object_or_404(Movie, pk=movie_id)
+#     serializer = MovieListSerializer(data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#         serializer.save(movie=movie, user=request.user)
+#         return Response(serializer.data, status = status.HTTP_201_CREATED)
