@@ -45,17 +45,17 @@ def movie_get():
             
             detail_response = requests.get(DETAIL_URL,params=detail_params).json()
             
-            # Movie.objects.create(
-            #     pk = json_data[j]['id'],
-            #     title = json_data[j]['title'],
-            #     overview = json_data[j]['overview'],
-            #     adult = json_data[j]['adult'],
-            #     poster_path = json_data[j]['poster_path'],
-            #     backdrop_path = json_data[j]['backdrop_path'],
-            #     vote_average = json_data[j]['vote_average'],
-            #     vote_count = json_data[j]['vote_count'],
-            #     runtime = detail_response['runtime'],
-            # )
+            Movie.objects.create(
+                pk = json_data[j]['id'],
+                title = json_data[j]['title'],
+                overview = json_data[j]['overview'],
+                adult = json_data[j]['adult'],
+                poster_path = json_data[j]['poster_path'],
+                backdrop_path = json_data[j]['backdrop_path'],
+                vote_average = json_data[j]['vote_average'],
+                vote_count = json_data[j]['vote_count'],
+                runtime = detail_response['runtime'],
+            )
     #         fields = {
     #             'title': json_data[j]['title'],
     #             'overview': json_data[j]['overview'],
