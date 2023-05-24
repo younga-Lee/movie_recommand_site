@@ -43,7 +43,7 @@ export default {
     },
     commentList() {
       return this.movie.comment_set
-    }
+    },
   },
   methods: {    
     getDetail() {
@@ -53,8 +53,6 @@ export default {
       axios({
         method: 'get',
         url: `${API_URL}/api/v1/movies/${movie_id}`
-        // url: `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${this.TMDB_API_KEY}`,
-        // params: {language: 'ko'},
       })
       .then((res) => {
         // console.log(res.data)

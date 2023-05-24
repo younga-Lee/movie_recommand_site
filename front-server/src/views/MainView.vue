@@ -37,26 +37,20 @@ export default {
   name: 'MovieView',
   methods: {
     getBox() {
-      // 로그인이 되어있으면 실행, 아니면 login page로 이동
-      // if (this.isLogin) {
-      //   this.$store.dispatch('getPop')
-      // } else {
-      //   alert('로그인이 필요한 페이지입니다')
-      //   this.$router.push({name: 'login'})
-      // }
       this.$store.dispatch('getBox')
     },
-    // getPop() {
-    //   this.$store.dispatch('getPop')
-    // },
     getMovies() {
       this.$store.dispatch('getMovies')
+    },
+    getUser() {
+      this.$store.dispatch('getUser')
     }
   },
   created() {
     this.getBox()
     // this.getPop()
     this.getMovies()
+    this.getUser()
   },
   computed: {
     basemovies() {

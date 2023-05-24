@@ -26,6 +26,7 @@
         <p>작성자 : {{ comment.username }}</p>
       </div>
     </div>
+    <!-- {{ commentlist }} -->
   </div>
 </template>
 
@@ -44,6 +45,14 @@ export default {
   props: {
     movie: Object,
     comments: Array,
+  },
+  computed: {
+    commentlist() {
+      // return this.props.comments.slice(0).reverse()
+      return this.props.comments.slice().sort((a, b) => {
+        return b.created_at - a.created_at
+      })
+    }
   },
   methods: {
     createComment() {

@@ -19,9 +19,9 @@
             <div class="float-end" v-else>
               <button @click="logout">Logout</button>
               <!-- <router-link @click="logout" id="link">Logout</router-link> -->
-              <router-link :to="{name: 'profile', params: {username : username}}" id="link">
-                <img src="@/assets/profile.png" alt="profile">
-                <span>{{ username }}</span>
+              <router-link :to="{name: 'profile', params: {username : user.username}}" id="link">
+                <img :src="user.img" alt="profile">
+                <span>{{ user.username }}</span>
               </router-link>
             </div>
           </ul>
@@ -60,8 +60,8 @@ export default {
     token() {
       return this.$store.state.token
     },
-    username() {
-      return this.$store.state.username
+    user() {
+      return this.$store.state.user
     }
   }
 }
