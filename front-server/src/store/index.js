@@ -19,7 +19,8 @@ export default new Vuex.Store({
     // popularList : [],
     TMDB_API_KEY : process.env.VUE_APP_TMDB_API_KEY,
     token: null,
-    username: null,
+    // username: null,
+    user: null,
   },
   getters: {
     isLogin(state) {
@@ -38,9 +39,6 @@ export default new Vuex.Store({
     GET_DATA(state, movies){
       state.boxoffieList = movies
     },
-    // GET_POP(state, pops){
-    //   state.popularList = pops
-    // },
     SAVE_TOKEN(state, token) {
       // 로컬스토리지 사용
       state.token = token
@@ -51,10 +49,13 @@ export default new Vuex.Store({
     },
     LOGOUT(state) {
       state.token = null
-      state.username = null
+      // state.username = null
       // router.push({name: 'main'})
       router.go(0)
-    }  
+    },
+    GET_USER(state, user) {
+      state.user = user
+    }
   },
   actions: {
     getMovies(context) {
@@ -88,43 +89,25 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    // getPop(context) {
-      
-    //   axios({
-    //     method: 'get',
-    //     url : `https://api.themoviedb.org/3/movie/popular?api_key=${this.state.TMDB_API_KEY}`,
-    //     headers: {
-    //       Authorization: `Token ${context.state.token}`
-    //     }
-    //   })
-      
-    //   .then((res) => {
-    //     // console.log(res.data.results)
-    //     context.commit('GET_POP', res.data.results.slice(0, 18))
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-    // },
     signUp(context, payload) {
       // console.log('1')
-      // console.log(payload)
+      console.log(payload)
       const username = payload.username
       const password1 = payload.password1
       const password2 = payload.password2
-      const file = payload.file
-
+      const img = payload.img
+      console.log(img)
       axios({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, password1, password2, file
+          username, password1, password2, img
         }
       })
       .then((res) => {
         // console.log('2')
         // console.log(res)
-        this.state.username = username
+        // this.state.username = username
         context.commit('SAVE_TOKEN', res.data.key)
       }) 
       .catch((err) => {
@@ -143,7 +126,7 @@ export default new Vuex.Store({
         }
       })
       .then((res) => {
-        this.state.username = username
+        // this.state.username = username
         context.commit('SAVE_TOKEN', res.data.key)
       })
       .catch((err) => {
@@ -152,7 +135,23 @@ export default new Vuex.Store({
     },
     logout(context) {
       context.commit('LOGOUT')
-    }
+    },
+    getUser(context) {
+      if (this.state.token) {
+        axios({
+          method: 'get',
+          url: `${API_URL}/profile/${this.state.username}/`,
+        })
+        .then((res) => {
+          context.commit('GET_USER', res.data)
+          // console.log(res.data)
+          // console.log(context)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+    },
   },
   modules: {
   }
