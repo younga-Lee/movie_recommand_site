@@ -11,11 +11,6 @@
         aria-describedby="inputGroupPrepend2" required>
       </div>
 
-      <!-- <div class="col-md-6">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" v-model="email">
-      </div> -->
-
       <div class="col-12">
         <label for="inputpassword" class="form-label">Password</label>
         <input
@@ -32,7 +27,7 @@
       
       <div class="col-12">
         <label for="image"></label>
-        <input type="file" id="image" class="form-control" aria-label="file example" v-on:change="fileUpload">
+        <input type="file" @change="fileUpload" ref="profileimg" id="image" class="form-control" aria-label="file example">
       </div>
 
       <div class="col-12" id="sbmbtn">
@@ -48,10 +43,9 @@ export default {
   data() {
     return {
       username: null,
-      // email: null,
       password1: null,
       password2: null,
-      file: null,
+      img: null,
       long: '',
     }
   },
@@ -63,25 +57,24 @@ export default {
         this.long = true
       }
     },
-    fileUpload(event) {
-      this.file = event.target.files[0];
+    fileUpload() {
+      this.img = this.$refs.profileimg.files
+      console.log(this.img)
     },
     signUp() {
       const username = this.username
-      // const email = this.email
       const password1 = this.password1
       const password2 = this.password2
-      const file = this.file
+      const img = this.img
 
       if (this.password1 != this.password2) {
         alert('비밀번호를 다시 확인해주세요')
       } else {
         const payload = {
-          username, password1, password2, file
+          username, password1, password2, img
         }
         
         this.$store.dispatch('signUp', payload)
-        // this.$router.push({name: 'main'})
       }
     },
   }
