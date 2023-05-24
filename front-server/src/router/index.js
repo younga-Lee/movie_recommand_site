@@ -6,6 +6,7 @@ import LoginView from '@/views/LoginView'
 import SignupView from '@/views/SignupView'
 import ResearchResultView from '@/views/ResearchResultView'
 import ProfileView from '@/views/ProfileView'
+import NoUserView from '@/views/NoUserView'
 
 Vue.use(VueRouter)
 
@@ -26,9 +27,23 @@ const routes = [
     component: SignupView
   },
   {
+    path: '/nouser',
+    name: 'nouser',
+    component: NoUserView
+  },
+  {
     path: '/profile/:username',
     name: 'profile',
-    component: ProfileView
+    component: ProfileView,
+    // beforeEnter: (to, from, next) => {
+    //   const username = to.params.username
+
+    //   if (username) {
+    //     next()
+    //   } else {
+    //     next({name: 'nouser'})
+    //   }
+    // }
   },
   {
     path: '/detail/:id',

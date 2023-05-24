@@ -42,15 +42,15 @@ export default {
     getMovies() {
       this.$store.dispatch('getMovies')
     },
-    getUser() {
-      this.$store.dispatch('getUser')
-    }
+    getLoginuser() {
+      this.$store.dispatch('getLoginuser', this.$store.state.username)
+    },
   },
   created() {
     this.getBox()
     // this.getPop()
     this.getMovies()
-    this.getUser()
+    this.getLoginuser()
   },
   computed: {
     basemovies() {
