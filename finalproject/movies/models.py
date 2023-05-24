@@ -14,6 +14,8 @@ class Movie(models.Model) :
     vote_count = models.IntegerField()
     runtime = models.FloatField()
     genres = models.ManyToManyField(Genre, related_name='movies')
+    likes_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes')
+    
 
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
@@ -21,4 +23,8 @@ class Comment(models.Model):
     comment_content = models.TextField()
     rating = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
+    
+
+    
+    
     
