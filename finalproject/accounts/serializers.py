@@ -15,3 +15,11 @@ class UserFollowSerailizer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+# class UserLikeSerializer(serializers.ModelSerializer):
+#     movie_set = (many=True, read_only=True)
+#     class Meta:
+#         model = Movie
+#         fields = '__all__'
+        
