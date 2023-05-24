@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 
 class Genre(models.Model) :
-    genre_id = models.IntegerField()
     name = models.CharField(max_length=50)
 
 class Movie(models.Model) : 
@@ -14,7 +13,7 @@ class Movie(models.Model) :
     vote_average = models.FloatField()
     vote_count = models.IntegerField()
     runtime = models.FloatField()
-    # genres = models.ManyToManyField(Genre, related_name='movies')
+    genres = models.ManyToManyField(Genre, related_name='movies')
 
 class Comment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)

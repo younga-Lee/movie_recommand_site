@@ -24,13 +24,13 @@ def movie_detail(request, movie_id):
     serializer = MovieDetailSerializer(movie)
     return Response(serializer.data)
 
-# # 장르
-# @api_view(['GET'])
-# def genre_list(request, genre_pk):
-#     genres = get_object_or_404(Genre, pk=genre_pk)
-#     serializer = GenreListSerializer(genres, many=True)
-#     # print(serializer.data)
-#     return Response(serializer.data)
+# 장르
+@api_view(['GET'])
+def genre_list(request, genre_pk):
+    genres = get_object_or_404(Genre, pk=genre_pk)
+    serializer = GenreListSerializer(genres, many=True)
+    # print(serializer.data)
+    return Response(serializer.data)
 
 # 한줄평 목록 조회
 @api_view(['GET'])
