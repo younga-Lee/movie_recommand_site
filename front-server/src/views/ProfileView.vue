@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="header">
-      <img src="@/assets/profile.png" alt="profile" id="profileimg">
+      <img src="@/assets/logo.png" alt="profile" id="profileimg">
       <div>
-        <p>{{ username }}</p>
+        <p>{{ user.username }}</p>
         <p>follower 2.3k  followings 3</p>
       </div>
     </div>
@@ -20,8 +20,8 @@
 export default {
   name: 'ProfileView',
   computed: {
-    username() {
-      return this.$route.params.username
+    user() {
+      return this.$route.params.user
     },    
   }
 }
