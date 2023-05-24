@@ -19,8 +19,9 @@ export default new Vuex.Store({
     // popularList : [],
     TMDB_API_KEY : process.env.VUE_APP_TMDB_API_KEY,
     token: null,
-    // username: null,
-    user: null,
+    username: null,
+    loginuser: null,
+    profileuser: null,
   },
   getters: {
     isLogin(state) {
@@ -45,17 +46,29 @@ export default new Vuex.Store({
       // console.log('3')
       // console.log(token)
       // main으로 보내기, $router 접근 불가라 import 해줘야함
+      // this.getUser(this.username)
       router.push({name: 'main'})
     },
     LOGOUT(state) {
       state.token = null
-      // state.username = null
+      state.user = null
+      state.username = null
+      state.loginuser = null
+
+      if (router.currentRoute.name === 'main') {
+        router.go(0) // 현재 페이지를 새로고침
+      } else {
+        router.push({ name: 'main' }) // 'main'으로 이동
+      }
       // router.push({name: 'main'})
-      router.go(0)
+      // router.go(0)
     },
-    GET_USER(state, user) {
-      state.user = user
-    }
+    GET_LOGINUSER(state, user) {
+      state.loginuser = user
+    },
+    GET_PROFILEUSER(state, user) {
+      state.profileuser = user
+    },
   },
   actions: {
     getMovies(context) {
@@ -107,7 +120,7 @@ export default new Vuex.Store({
       .then((res) => {
         // console.log('2')
         // console.log(res)
-        // this.state.username = username
+        this.state.username = username
         context.commit('SAVE_TOKEN', res.data.key)
       }) 
       .catch((err) => {
@@ -126,24 +139,48 @@ export default new Vuex.Store({
         }
       })
       .then((res) => {
-        // this.state.username = username
+        this.state.username = username
         context.commit('SAVE_TOKEN', res.data.key)
       })
       .catch((err) => {
-        console.log(err)
+        if (err.response && err.response.status === 400) {
+          alert('이름과 비밀번호를 다시 확인해주세요')
+        } else {
+          console.log(err)
+        }
       })
     },
     logout(context) {
       context.commit('LOGOUT')
     },
-    getUser(context) {
+    getLoginuser(context, username) {
+      // console.log(context)
+      // console.log(username)
       if (this.state.token) {
         axios({
           method: 'get',
-          url: `${API_URL}/profile/${this.state.username}/`,
+          url: `${API_URL}/profile/${username}/`,
         })
         .then((res) => {
-          context.commit('GET_USER', res.data)
+          context.commit('GET_LOGINUSER', res.data)
+          // console.log(res.data)
+          // console.log(context)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+    },
+    getProfileuser(context, username) {
+      // console.log(context)
+      // console.log(username)
+      if (this.state.token) {
+        axios({
+          method: 'get',
+          url: `${API_URL}/profile/${username}/`,
+        })
+        .then((res) => {
+          context.commit('GET_PROFILEUSER', res.data)
           // console.log(res.data)
           // console.log(context)
         })
