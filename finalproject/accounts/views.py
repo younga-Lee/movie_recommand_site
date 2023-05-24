@@ -27,3 +27,10 @@ def follow(request, username):
             person.followers.add(me)
             followed = True
         return Response(followed)
+    
+@api_view(['PUT'])
+def user_edit(request, username):
+    User = get_user_model()
+    user = get_object_or_404(User, username=username)
+    serializer = UserProfileSerializer(user)
+    

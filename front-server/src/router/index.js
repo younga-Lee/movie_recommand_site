@@ -7,6 +7,7 @@ import SignupView from '@/views/SignupView'
 import ResearchResultView from '@/views/ResearchResultView'
 import ProfileView from '@/views/ProfileView'
 import NoUserView from '@/views/NoUserView'
+import EditProfileView from '@/views/EditProfileView'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,11 @@ const routes = [
     path: '/nouser',
     name: 'nouser',
     component: NoUserView
+  },
+  {
+    path: '/edit/:username',
+    name: 'edit',
+    component: EditProfileView
   },
   {
     path: '/profile/:username',

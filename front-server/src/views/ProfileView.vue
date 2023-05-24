@@ -5,9 +5,12 @@
         <!-- <img src="@/assets/logo.png" alt="profile" id="profileimg"> -->
         <img :src="API_URL + profileuser.image" alt="profile" id="profileimg">
         <div>
+          <!-- <p>{{ profileuser }}</p> -->
           <p>{{ profileuser.username }}</p>
           <p>follower 2.3k  followings {{ profileuser.followings.length }}</p>
-          <button @click="follow" v-if="profileuser.username != loginuser.username">Follow</button>
+          <button @click="follow" v-if="!loginuser.followings.includes(profileuser.id)">Follow</button>
+          <button @click="follow" v-if="loginuser.followings.includes(profileuser.id)">Unfollow</button>
+          <button @click="goEdit" v-if="loginuser.username == profileuser.username">회원 정보 수정</button>
         </div>
       </div>
       <div id="wishlist" class="border">
@@ -59,17 +62,24 @@ export default {
           Authorization: `Token ${this.$store.state.token}`
         }        
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
+        this.getLoginuser()
       })
       .catch((err) => {
         console.log(err)
       })
     },
+    goEdit() {
+      const username = this.username
+      this.$router.push({name: 'edit', params: {username: username}})
+    },
     getProfileuser() {
       const username = this.username
       this.$store.dispatch('getProfileuser', username)
     },
+    getLoginuser() {
+      this.$store.dispatch('getLoginuser', this.$store.state.username)
+    }
   },
   created() {
     this.getProfileuser()
