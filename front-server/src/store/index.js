@@ -102,31 +102,53 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    signUp(context, payload) {
-      // console.log('1')
-      console.log(payload)
-      const username = payload.username
-      const password1 = payload.password1
-      const password2 = payload.password2
-      const img = payload.img
-      console.log(img)
-      axios({
-        method: 'post',
-        url: `${API_URL}/accounts/signup/`,
-        data: {
-          username, password1, password2, img
-        }
-      })
-      .then((res) => {
-        // console.log('2')
-        // console.log(res)
-        this.state.username = username
-        context.commit('SAVE_TOKEN', res.data.key)
-      }) 
-      .catch((err) => {
-        console.log(err)
-      })      
-    },
+    // signUp(context, payload) {
+    //   // console.log('1')
+    //   console.log(payload)
+    //   const username = payload.username
+    //   const password1 = payload.password1
+    //   const password2 = payload.password2
+      
+    //   axios({
+    //     method: 'post',
+    //     url: `${API_URL}/accounts/signup/`,
+    //     data: {
+    //       username, password1, password2
+    //     }
+    //   })
+    //   .then((res) => {
+    //     // console.log('2')
+    //     // console.log(res)
+    //     // state.username = username
+    //     context.commit('SAVE_TOKEN', res.data.key)
+    //   }) 
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })      
+    // },
+    // editProfile(context, payload) {
+    //   const username = payload.username
+    //   const password1 = payload.password1
+    //   const password2 = payload.password2
+    //   const image = payload.image
+      
+    //   axios({
+    //     method: 'put',
+    //     url: `${API_URL}/profile/edit/${state.username}`,
+    //     data: {
+    //       username, password1, password2, image
+    //     }
+    //   })
+    //   .then((res) => {
+    //     // console.log('2')
+    //     // console.log(res)
+    //     this.state.username = username
+    //     context.commit('SAVE_TOKEN', res.data.key)
+    //   }) 
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })      
+    // },
     login(context, payload) {
       const username = payload.username
       const password = payload.password
