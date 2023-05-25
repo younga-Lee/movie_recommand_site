@@ -35,27 +35,29 @@ def movie_detail(request, movie_id):
     serializer = MovieDetailSerializer(movie)
     return Response(serializer.data)
 
-# 장르
+#선택한 장르의 영화들만 
 @api_view(['GET'])
-def genre_list(request, genre_pk):
-    genres = get_object_or_404(Genre, pk=genre_pk)
-    serializer = GenreListSerializer(genres, many=True)
-    # print(serializer.data)
+def random_genre(request):
+    search_query = request.query_params.get('query', '') #검색어
+    movies = Movie.objects.filter(genres__name__icontains=search_query)
+    serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
+
+# @api_view(['GET'])
+# def random_genre(request, genre_pk):
+#     genres = get_object_or_404(Genre, pk=genre_pk)
+#     serializer = GenreListSerializer(genres, many=True)
+#     # print(serializer.data)
+#     return Response(serializer.data)
 
 # 한줄평 목록 조회
 @api_view(['GET'])
 def comment_list(request, movie_id):
     comments = get_list_or_404(Comment, movie=movie_id)
     serializer = CommentSerializer(comments, many=True)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data)
 
-# @api_view(['GET'])
-# def comment_list(request):
-#     comments = get_list_or_404(Comment)
-#     serializer = CommentSerializer(comments, many=True)
-#     return Response(serializer.data)
 
 #한줄평 작성
 @api_view(['POST'])
