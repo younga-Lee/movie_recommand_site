@@ -44,6 +44,14 @@ def random_genre(request):
     random_movies = random.sample(serializer.data, 20) #20개만 불러오기
     return Response(random_movies)
 
+#선택한 런타임 이하의 영화들만
+@api_view
+def runtime_movie(request):
+    search_query = request.query_params.get('query', '') #런타임 검색어
+    movies = Movie.objects.filter(runtime__lte=search_query)
+    serializer = MovieListSerializer(movies, many=True)
+    return Response(serializer.data)
+
 # 한줄평 목록 조회
 @api_view(['GET'])
 def comment_list(request, movie_id):
