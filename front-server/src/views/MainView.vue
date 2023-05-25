@@ -109,6 +109,7 @@ export default {
 .container {
   display: flex;
   overflow-x: auto;
+  /* white-space: nowrap; */
   /* margin-bottom: 56px; */
   margin-bottom: 56px !important;
 }

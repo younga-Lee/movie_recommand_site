@@ -1,18 +1,33 @@
 <template>
   <div>
-    <form id="loginform" @submit.prevent="login">
-      <div class="row mb-3">
-        <label for="username" class="form-label">username</label>
-        <input type="text" class="form-control" id="username" v-model="username">
+    <div class="signupForm">
+      <div class="formtitle">
+        <p class="title1">로그인</p>
+        <p class="title2">씨네벅스에 오신 것을 환영합니다! 로그인 후 이용해주세요!</p>
       </div>
+      <form id="formbody" @submit.prevent="login">
+        <div class="inputbox">
+          <div id="inputusername">
+            <label for="username" class="form-label" id="nameform">이름 *</label>
+            <input type="text" class="form-control" id="username" v-model="username" required placeholder="aiden">
+          </div>
 
-      <div class="row mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" v-model="password">
-      </div>
+          <div class="col-12" id="passwordsection">
+            <div class="password1">
+              <label for="inputpassword" class="form-label" id="passform">비밀번호 *</label>
+              <input
+              v-model="password"
+              type="password" class="form-control" 
+              id="inputpassword" placeholder="비밀번호">
+            </div>
+          </div>
 
-      <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
+          <button class="upbtn">
+            <span>회원가입</span>
+          </button>
+        </div>
+      </form>    
+    </div>
   </div>
 </template>
 
@@ -40,16 +55,13 @@ export default {
 }
 </script>
 
-<style>
-#loginform {
-  width: 500px;
-  height: 500px;
-  margin: auto;
-  margin-top: 100px;
+<style scoped>
+.title2 {
+  text-align: center;
 }
 
-label {
-  text-align: left;
+#inputpassword {
+  width: 552px;
 }
 
 </style>

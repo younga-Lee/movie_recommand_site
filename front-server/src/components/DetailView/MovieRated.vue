@@ -23,6 +23,7 @@
       <div class="comment" v-for="comment in comments?.slice().reverse()" :key="comment.id">
         <p>내용 : {{ comment.comment_content }}</p>
         <p>평점 : {{ comment.rating }}</p>
+        <a @click="goProfile(comment.username)">{{ comment.username }}</a>
         <p @click="goProfile(comment.username)">작성자 : {{ comment.username }}</p>
         <button v-if="comment.username == loginuser.username" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
           수정하기
@@ -76,6 +77,7 @@ export default {
       ratings: null,
       editcontent: null,
       editratings: null,
+      url: `http://127.0.0.1:8000/profile/${this}`
     }
   },
   props: {
@@ -155,8 +157,9 @@ export default {
       })
     },
     goProfile(username) {
+      this.$store.dispatch('getProfileuser', username)
       this.$router.push({name: 'profile', params: {username:username}})
-      this.$router.go(this.$router.currentRoute)
+      
     }
   },
 }

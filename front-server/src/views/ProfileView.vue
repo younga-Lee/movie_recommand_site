@@ -6,30 +6,20 @@
         <div class="profiletext">
           <p class="profilename">{{ profileuser.username }}</p>
           <div class="followtext">
-            <p>follower <span>{{ profileuser.followers_cnt }}</span> followings <span>{{ profileuser.followings.length }}</span>
-            </p>
+            <p>followers</p>
+            <p>{{ profileuser.followers_cnt }}</p>
+            <p>followings</p>
+            <p>{{ profileuser.followings.length }}</p>
           </div>
         </div>
         <img src="@/assets/editbutton.svg" alt="edit" @click="goEdit" class="editimg" v-if="loginuser.username == profileuser.username">
         <img src="@/assets/followbtn.svg" alt="follow" @click="follow" class="editimg" 
         v-if="loginuser.username != profileuser.username && !loginuser.followings.includes(profileuser.id)">
       </div>
-      <!-- <div class="header">
-        <img :src="API_URL + profileuser.image" alt="profile" id="profileimg">
-        <div>
-          <p>{{ profileuser.username }}</p>
-          <p>follower {{profileuser.followers_cnt}}  followings {{ profileuser.followings.length }}</p>
-          <div v-if="!loginuser.username == profileuser.username">
-            <button @click="follow" v-if="!loginuser.followings.includes(profileuser.id)">Follow</button>
-            <button @click="follow" v-if="loginuser.followings.includes(profileuser.id)">Unfollow</button>
-          </div>
-          <button @click="goEdit" v-if="loginuser.username == profileuser.username">회원 정보 수정</button>
-        </div>
-      </div> -->
       <div id="wishlist" class="border">
         <WishList 
         v-if="profileuser.likes_movies[0]"
-        :wishList="profileuser.likes_movies"
+        :wishList="wishlist"
         />
         <NoWish 
         v-if="!profileuser.likes_movies[0]"
@@ -59,6 +49,7 @@ export default {
     return {
       API_URL: 'http://127.0.0.1:8000',
       profileuser: null,
+      wishlist: null,
     }
   },
   computed: {
@@ -104,12 +95,17 @@ export default {
     },
     getLoginuser() {
       this.$store.dispatch('getLoginuser', this.$store.state.username)
+    },
+    getWishlist() {
+      this.wishlist = this.$store.state.profileuser.likes_movies
     }
   },
   created() {
-    this.getProfileuser()
+    // this.getProfileuser()
     window.scrollTo(0,0)
+    this.profileuser = this.$store.state.profileuser
 
+    // this.getWishlist()
     // this.$router.go(this.$router.currentRoute)
     // console.log(this.$route.params.username)
   }
@@ -208,16 +204,16 @@ flex-grow: 0;
   flex-direction: row;
   align-items: flex-start;
   padding: 0px;
-  gap: 8px;
+  gap: 35px;
 
-  width: 111px;
+  width: 243px;
   height: 24px;
 
 
   /* Inside auto layout */
 
   flex: none;
-  order: 0;
+  order: 1;
   flex-grow: 0;
 }
 

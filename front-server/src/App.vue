@@ -8,7 +8,8 @@
         </router-link>
         <div class="yestoken" v-if="token? false : true ">
           <img src="@/assets/signupbtn.svg" alt="signup" @click="goSignup">
-          <img src="@/assets/loginbtn.svg" alt="login" @click="goLogin" class="loginbtn">
+          <a><img src="@/assets/loginbtn.svg" alt="login" @click="goLogin" class="loginbtn"></a>
+          
           <!-- <button class="loginbtn"><router-link to="/login" id="link" class="loginlink">로그인</router-link></button> -->
         </div>
         <div class="notoken" v-if="token">
@@ -18,12 +19,18 @@
           </router-link>
         </div>
       </div>
-      <div class="search">
-        <form class="d-flex" role="search" @submit="searchMovie">
-          <input id="searchinput" v-model="query" class="form-control me-2" type="search" placeholder="영화 제목 입력" aria-label="Search" maxlength="27">
-          <img src="@/assets/search.svg" alt="search" id="searchbtn" @click="searchMovie">
-          <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-        </form>        
+      <div class="twoline">
+        <div class="filter">
+          <img src="@/assets/filter_list.svg" alt="filterimg">
+          <p>필터</p>
+        </div>
+        <div class="search">
+          <form class="d-flex" role="search" @submit="searchMovie">
+            <input id="searchinput" v-model="query" class="form-control me-2" type="search" placeholder="영화 제목 입력" aria-label="Search" maxlength="27">
+            <img src="@/assets/search.svg" alt="search" id="searchbtn" @click="searchMovie">
+            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+          </form>        
+        </div>
       </div>
     </header>
     <div class="contents">
@@ -79,38 +86,37 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  background: #F2F0EA !important;
+  /* text-align: center; */
+  /* color: #2c3e50; */
+  background-color: #F2F0EA !important;
+  height: 1653px;
+
 }
 
 header {
-  background: #F2F0EA;
-  /* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-end;
+padding: 40px 156px;
+gap: 32px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 40px 156px;
-  gap: 32px;
+/* position: absolute; */
+width: 1440px;
+height: 206px;
+left: 0px;
+top: 0px;
 
-  /* position: absolute; */
-  /* width: 1440px; */
-  height: 206px;
-  left: 0px;
-  top: 0px;
+background: #F2F0EA;
 }
 
 .contents {
-  /* position: absolute; */
-  /* width: 1440px; */
-  height: 1447px;
-  left: 0px;
-  top: 206px;
-  background: #F2F0EA;
-  padding: 50px;
-  padding-top: 0;
+/* position: absolute; */
+width: 1440px;
+height: 1447px;
+left: 0px;
+top: 206px;
+padding: 0 50px;
 }
 
 .logoimg {
@@ -300,4 +306,65 @@ button {
   flex-grow: 0;  
 }
 
+.twoline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  gap: 32px;
+
+  width: 1128px;
+  height: 48px;
+
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.filter {
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 62px;
+height: 24px;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+.filter p {
+  width: 30px;
+  height: 22px;
+
+  /* MO/16/Bold */
+
+  font-family: 'Spoqa Han Sans Neo';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21px;
+  /* identical to box height, or 133% */
+
+
+  color: #000000;
+
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
 </style>
