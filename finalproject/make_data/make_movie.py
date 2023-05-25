@@ -9,14 +9,13 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cinebucks.settings")
 
 django.setup()
 
-from movies.models import Movie
+from movies.models import Movie, Genre
 
 #영화 api에서 데이터 불러오기
 def movie_get():
     URL = 'https://api.themoviedb.org/3/movie/popular' 
-    # URL = 'https://api.themoviedb.org/3/movie/now_playing' 
     movie_list =[]
-    
+
     for i in range(1, 51): #데이터 1000개 불러오기 
         params = {
         'api_key': '837a5bfab43141b15658e475af9b943c',
@@ -45,7 +44,7 @@ def movie_get():
             
             detail_response = requests.get(DETAIL_URL,params=detail_params).json()
             
-            Movie.objects.create(
+            movie = Movie.objects.create(
                 pk = json_data[j]['id'],
                 title = json_data[j]['title'],
                 overview = json_data[j]['overview'],
@@ -55,30 +54,14 @@ def movie_get():
                 vote_average = json_data[j]['vote_average'],
                 vote_count = json_data[j]['vote_count'],
                 runtime = detail_response['runtime'],
+                
             )
-    #         fields = {
-    #             'title': json_data[j]['title'],
-    #             'overview': json_data[j]['overview'],
-    #             'adult': json_data[j]['adult'],
-    #             'poster_path': json_data[j]['poster_path'],
-    #             'backdrop_path': json_data[j]['backdrop_path'],
-    #             'vote_average': json_data[j]['vote_average'],
-    #             'vote_count': json_data[j]['vote_count'],
-    #             'runtime': detail_response['runtime'],
-
-    #             }
+            for genre_id in json_data[j]['genre_ids']:
+                # 장르긴 장르인데, 영화와 관련된 장르
+                # 장르 아이디를 통해서 우리 db의 장르를 확인할 수 있어요~
+                genre = Genre.objects.get(pk=genre_id)
+                movie.genres.add(genre)
             
-    #         #json저장할 때 꼭 이 형태로 해야함! (data구조)
-    #         data = {
-    #             "pk": json_data[j]['id'],
-    #             "model": "movies.movie",
-    #             "fields": fields
-    #         }
-    #         movie_list.append(data)
-            
-    # ## json파일로 저장하기
-    # with open('boxmovie.json', 'w', encoding='UTF-8') as t:
-    #     json.dump(movie_list, t, ensure_ascii=False, indent=2)
 
 movie_get()
 

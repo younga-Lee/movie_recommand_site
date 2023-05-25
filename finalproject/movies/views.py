@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated #로그인 해야만 가�
 
 from .models import Movie, Genre, Comment
 from .serializers import MovieListSerializer, MovieDetailSerializer, GenreListSerializer, CommentSerializer
-
+import random
 
 #전체 영화 리스트 
 @api_view(['GET'])
@@ -35,27 +35,36 @@ def movie_detail(request, movie_id):
     serializer = MovieDetailSerializer(movie)
     return Response(serializer.data)
 
-# 장르
+#런타임, 장르에 따른 검색어
 @api_view(['GET'])
-def genre_list(request, genre_pk):
-    genres = get_object_or_404(Genre, pk=genre_pk)
-    serializer = GenreListSerializer(genres, many=True)
-    # print(serializer.data)
+def filter_movies(request):
+    runtime_query = request.query_params.get('runtime', '') # 런타임(파라미터명도 runtime으로 하면됨)
+    genre_query = request.query_params.get('genre', '') # 장르
+    adult_query = request.query_params.get('adult', '') # 성인
+
+    movies = Movie.objects.all()
+
+    if runtime_query:
+        movies = movies.filter(runtime__lte=runtime_query)
+    if genre_query:
+        movies = movies.filter(genres__name__icontains=genre_query)
+    if adult_query == 'true':
+            movies = movies.filter(adult=True)
+    elif adult_query == 'false':
+        movies = movies.filter(adult=False)
+
+    serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
+
 
 # 한줄평 목록 조회
 @api_view(['GET'])
 def comment_list(request, movie_id):
     comments = get_list_or_404(Comment, movie=movie_id)
     serializer = CommentSerializer(comments, many=True)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data)
 
-# @api_view(['GET'])
-# def comment_list(request):
-#     comments = get_list_or_404(Comment)
-#     serializer = CommentSerializer(comments, many=True)
-#     return Response(serializer.data)
 
 #한줄평 작성
 @api_view(['POST'])
