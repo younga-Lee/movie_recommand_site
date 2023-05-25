@@ -7,5 +7,5 @@ urlpatterns = [
     path('edit/<str:username>/', views.user_edit, name='edit'),
     # path('getuser/<str:username>/', views.get_user, name='getuser'),
     path('<str:username>/follow/', views.follow, name='follow'),
-    path('<str:username>/likes/', views.likes),
+    # path('<str:username>/likes/', views.likes),
 ]   
