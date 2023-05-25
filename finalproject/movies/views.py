@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated #로그인 해야만 가�
 
 from .models import Movie, Genre, Comment
 from .serializers import MovieListSerializer, MovieDetailSerializer, GenreListSerializer, CommentSerializer
-
+import random
 
 #전체 영화 리스트 
 @api_view(['GET'])
@@ -38,17 +38,11 @@ def movie_detail(request, movie_id):
 #선택한 장르의 영화들만 
 @api_view(['GET'])
 def random_genre(request):
-    search_query = request.query_params.get('query', '') #검색어
+    search_query = request.query_params.get('query', '') #검색어 = 장르이름
     movies = Movie.objects.filter(genres__name__icontains=search_query)
     serializer = MovieListSerializer(movies, many=True)
-    return Response(serializer.data)
-
-# @api_view(['GET'])
-# def random_genre(request, genre_pk):
-#     genres = get_object_or_404(Genre, pk=genre_pk)
-#     serializer = GenreListSerializer(genres, many=True)
-#     # print(serializer.data)
-#     return Response(serializer.data)
+    random_movies = random.sample(serializer.data, 20) #20개만 불러오기
+    return Response(random_movies)
 
 # 한줄평 목록 조회
 @api_view(['GET'])
