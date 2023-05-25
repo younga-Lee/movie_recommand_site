@@ -5,12 +5,7 @@
         <img src="@/assets/coffee.png" alt="logo">
         회원정보 수정
       </h1>
-      <div class="col-md-4">
-        <label for="username" class="form-label">Username : </label>
-        <input type="text" class="form-control" id="username" v-model="username"
-        aria-describedby="inputGroupPrepend2" required>
-      </div>
-
+      
       <div class="col-12">
         <label for="inputpassword" class="form-label">Password</label>
         <input
@@ -20,10 +15,10 @@
         <p v-if="!long">비밀번호를 4자리 이상 입력해주세요</p>
       </div>
 
-      <div class="col-12">
+      <!-- <div class="col-12">
         <label for="password2" class="form-label">Password Check</label>
         <input v-model="password2" type="password" class="form-control" id="password2" placeholder="password">
-      </div>
+      </div> -->
       
       <div class="col-12">
         <label for="image"></label>
@@ -38,13 +33,17 @@
 </template>
 
 <script>
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8000'
+
+
 export default {
   name: 'EditProfile',
   data() {
     return {
       username: null,
       password1: null,
-      password2: null,
+      // password2: null,
       image: null,
       long: null,
     }
@@ -62,20 +61,25 @@ export default {
       console.log(this.image)
     },
     editProfile() {
-      const username = this.username
-      const password1 = this.password1
-      const password2 = this.password2
-      const image = this.image
+      const formData = new FormData();
+      formData.append('password1', this.password1);
+      formData.append('image', this.image);
 
-      if (this.password1 != this.password2) {
-        alert('비밀번호를 다시 확인해주세요')
-      } else {
-        const payload = {
-          username, password1, password2, image
-        }
-        
-        this.$store.dispatch('editProfile', payload)
-      }
+      axios({
+        method: 'put',
+        url: `${API_URL}/profile/edit/${this.state.username}`,
+        headers: {
+          Authorization: `Token ${this.state.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        data: formData,
+      })   
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     },
   }
 }
