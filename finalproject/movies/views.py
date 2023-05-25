@@ -8,7 +8,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated #로그인 해야만 가능
 
 from .models import Movie, Genre, Comment
-from .serializers import MovieListSerializer, MovieDetailSerializer, GenreListSerializer, CommentSerializer, MovieLikeSerializer
+from .serializers import MovieListSerializer, MovieDetailSerializer, GenreListSerializer, CommentSerializer
 
 
 #전체 영화 리스트 
@@ -56,7 +56,7 @@ def comment_create(request, movie_id):
 
 # 한줄평 디테일
 @api_view(['GET', 'DELETE', 'PUT'])
-def comment_detail(request, comment_pk):
+def comment_detail(request, movie_id, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
 
     if request.method == 'GET':
@@ -72,13 +72,3 @@ def comment_detail(request, comment_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
-
-# #좋아요한 영화목록   
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def likes(request, movie_id):
-#     movie = get_object_or_404(Movie, pk=movie_id)
-#     serializer = MovieListSerializer(data=request.data)
-#     if serializer.is_valid(raise_exception=True):
-#         serializer.save(movie=movie, user=request.user)
-#         return Response(serializer.data, status = status.HTTP_201_CREATED)

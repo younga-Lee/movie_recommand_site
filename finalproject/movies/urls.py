@@ -8,5 +8,6 @@ urlpatterns = [
     # path('comments/', views.comment_list),
     path('comments/<int:movie_id>/', views.comment_list),
     path('movies/<int:movie_id>/comments/', views.comment_create),
+    path('movies/<int:movie_id>/comments/<int:comment_pk>/', views.comment_detail),
     
 ]
