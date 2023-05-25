@@ -4,6 +4,10 @@ from .models import User
 class UserProfileSerializer(serializers.ModelSerializer):
     followings_cnt = serializers.CharField(source='followings.count', read_only=True)
     followers_cnt = serializers.CharField(source='followers.count', read_only=True)
+    
+    likes_movies_cnt = serializers.CharField(source='likes_movies.count', read_only=True)
+    likes_user_cnt = serializers.CharField(source='likes_user.count', read_only=True)
+    
     # followers = serializers.CharField(source='followers', read_only=True)
     
     # 팔로우의 숫자
@@ -23,11 +27,3 @@ class UserFollowSerailizer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-
-
-# class UserLikeSerializer(serializers.ModelSerializer):
-#     movie_set = (many=True, read_only=True)
-#     class Meta:
-#         model = Movie
-#         fields = '__all__'
-        
