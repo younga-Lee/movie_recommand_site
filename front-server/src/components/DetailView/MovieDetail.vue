@@ -8,7 +8,11 @@
       <div class="container">
         <img class="col-2" id="poster" :src="imgurl + movie.poster_path" alt="poster">
         <div class="ptag col-7">
-          <h2 style="font-weight: bold">{{ movie.title }}</h2>
+          <div>
+            <h2 style="font-weight: bold">{{ movie.title }}</h2>
+            <button @click="addWish(movie.id)">영화 주문하기</button>
+            <button @click="addWish(movie.id)">영화 주문취소</button>
+          </div>
           <p>
             <span>평점 : ★{{ (movie.vote_average / 2).toFixed(1) }}</span> • 
             <span>{{ genres ? genres[0]?.name : '' }}/{{ genres ? genres[1]?.name : '' }}/{{ genres ? genres[2]?.name : '' }}</span>
@@ -41,7 +45,8 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'MovieDetail',
@@ -58,14 +63,38 @@ export default {
     thumbUrl: String,
   },
   methods: {
-    popVideo() {
+    addWish(id) {
+      const movie_id = id
       
-    }
+      axios({
+        method: 'post',
+        url: `${API_URL}/profile/${movie_id}/likes/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        } 
+      })
+      .then(() => {
+        this.$router.go(this.$router.currentRoute)         
+        // this.getLoginuser()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    getLoginuser() {
+      this.$store.dispatch('getLoginuser', this.$store.state.username)
+    }    
   },
   computed: {
     genres() {
       return this.movie.genres
     },
+    username() {
+      return this.$store.state.username
+    }
+  },
+  created() {
+    this.getLoginuser()
   }
 }
 </script>

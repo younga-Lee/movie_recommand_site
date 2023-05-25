@@ -32,6 +32,10 @@ export default new Vuex.Store({
       // vote_average 높은 순으로 정렬한 배열 반환
       return state.basemovies.slice().sort((a, b) => b.vote_average - a.vote_average) 
     },
+    manyseeList(state) {
+      // vote_average 높은 순으로 정렬한 배열 반환
+      return state.basemovies.slice().sort((a, b) => b.vote_count - a.vote_count) 
+    },
   },
   mutations: {
     GET_MOVIES(state, movies) {
@@ -102,30 +106,30 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    // signUp(context, payload) {
-    //   // console.log('1')
-    //   console.log(payload)
-    //   const username = payload.username
-    //   const password1 = payload.password1
-    //   const password2 = payload.password2
+    signUp(context, payload) {
+      // console.log('1')
+      console.log(payload)
+      const username = payload.username
+      const password1 = payload.password1
+      const password2 = payload.password2
       
-    //   axios({
-    //     method: 'post',
-    //     url: `${API_URL}/accounts/signup/`,
-    //     data: {
-    //       username, password1, password2
-    //     }
-    //   })
-    //   .then((res) => {
-    //     // console.log('2')
-    //     // console.log(res)
-    //     // state.username = username
-    //     context.commit('SAVE_TOKEN', res.data.key)
-    //   }) 
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })      
-    // },
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/signup/`,
+        data: {
+          username, password1, password2
+        }
+      })
+      .then((res) => {
+        // console.log('2')
+        // console.log(res)
+        this.state.username = username
+        context.commit('SAVE_TOKEN', res.data.key)
+      }) 
+      .catch((err) => {
+        console.log(err)
+      })      
+    },
     // editProfile(context, payload) {
     //   const username = payload.username
     //   const password1 = payload.password1
