@@ -35,22 +35,27 @@ def movie_detail(request, movie_id):
     serializer = MovieDetailSerializer(movie)
     return Response(serializer.data)
 
-#선택한 장르의 영화들만 
+#런타임, 장르에 따른 검색어
 @api_view(['GET'])
-def random_genre(request):
-    search_query = request.query_params.get('query', '') #검색어 = 장르이름
-    movies = Movie.objects.filter(genres__name__icontains=search_query)
-    serializer = MovieListSerializer(movies, many=True)
-    random_movies = random.sample(serializer.data, 20) #20개만 불러오기
-    return Response(random_movies)
+def filter_movies(request):
+    runtime_query = request.query_params.get('runtime', '') # 런타임(파라미터명도 runtime으로 하면됨)
+    genre_query = request.query_params.get('genre', '') # 장르
+    adult_query = request.query_params.get('adult', '') # 성인
 
-#선택한 런타임 이하의 영화들만
-@api_view
-def runtime_movie(request):
-    search_query = request.query_params.get('query', '') #런타임 검색어
-    movies = Movie.objects.filter(runtime__lte=search_query)
+    movies = Movie.objects.all()
+
+    if runtime_query:
+        movies = movies.filter(runtime__lte=runtime_query)
+    if genre_query:
+        movies = movies.filter(genres__name__icontains=genre_query)
+    if adult_query == 'true':
+            movies = movies.filter(adult=True)
+    elif adult_query == 'false':
+        movies = movies.filter(adult=False)
+
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
+
 
 # 한줄평 목록 조회
 @api_view(['GET'])
