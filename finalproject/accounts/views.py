@@ -48,14 +48,12 @@ def follow(request, username):
 #위시리스트
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def likes(request, username):
-    person = get_object_or_404(User, username=username)
-    me = request.user
-    if person != me:
-        if person.likes_users.filter(username=me.username).exists():
-            person.likes_users.remove(me)
-            liked = False
-        else:
-            person.likes_users.add(me)
-            liked = True
-        return Response(liked)
+def likes(request, movie_id):
+    user = request.user
+    if user.likes_movies.filter(id=movie_id).exists():
+        user.likes_movies.remove(movie_id)
+        liked = False
+    else:
+        user.likes_movies.add(movie_id)
+        liked = True
+    return Response(liked)
