@@ -103,7 +103,7 @@ export default {
 #back {
   height: 300px;
   position: relative;
-  z-index: -1;
+  /* z-index: 1; */
 }
 
 #bgimage {
@@ -118,7 +118,8 @@ export default {
 }
 
 #front {
-  z-index: 1;
+  position: relative;
+  /* z-index: 1; */
   margin-left: 20px;
 }
 

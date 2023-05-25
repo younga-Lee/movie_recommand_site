@@ -7,51 +7,25 @@
           <img class="logoimg" src="@/assets/logo.svg" alt="main">
         </router-link>
         <div class="yestoken" v-if="token? false : true ">
-          <router-link to="/signup" id="link" class="signuplink">회원가입</router-link>
-          <button class="loginbtn"><router-link to="/login" id="link" class="loginlink">로그인</router-link></button>
+          <img src="@/assets/signupbtn.svg" alt="signup" @click="goSignup">
+          <img src="@/assets/loginbtn.svg" alt="login" @click="goLogin" class="loginbtn">
+          <!-- <button class="loginbtn"><router-link to="/login" id="link" class="loginlink">로그인</router-link></button> -->
         </div>
         <div class="notoken" v-if="token">
-          <button @click="logout" class="logoutlink">로그아웃</button>
+          <img src="@/assets/logoutbtn.svg" alt="logout" @click="logout" class="logoutlink">
           <router-link :to="{name: 'profile', params: {username : username}}" id="link">
-            <img  src="@/assets/UserImages.svg" alt="profile">
+            <img src="@/assets/UserImages.svg" alt="profile">
           </router-link>
         </div>
       </div>
       <div class="search">
         <form class="d-flex" role="search" @submit="searchMovie">
-          <input id="searchinput" v-model="searchword" class="form-control me-2" type="search" placeholder="영화 제목 입력" aria-label="Search" maxlength="27">
+          <input id="searchinput" v-model="query" class="form-control me-2" type="search" placeholder="영화 제목 입력" aria-label="Search" maxlength="27">
           <img src="@/assets/search.svg" alt="search" id="searchbtn" @click="searchMovie">
           <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
         </form>        
       </div>
     </header>
-    <!-- <nav class="navbar navbar-expand-lg">
-        <router-link to="/" id="link">
-          <img src="@/assets/logo.svg" alt="main">
-        </router-link>
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <form class="d-flex" role="search" @submit="searchMovie">
-              <input v-model="searchword" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <button class="loginbtn">로그인</button>
-            <div class="float-end" v-if="!token">
-              <router-link to="/login" id="link">Login</router-link> 
-              <router-link to="/signup" id="link">Signup</router-link>
-            </div>
-            <div class="float-end" v-else>
-              <button @click="logout">Logout</button>
-              <router-link :to="{name: 'profile', params: {username : username}}" id="link">
-                <img src="@/assets/profile.png" alt="profile">
-                <span>{{ username }}</span>
-              </router-link>
-            </div>
-          </ul>
-        </div>
-      </div>
-    </nav>     -->
     <div class="contents">
       <router-view/>
     </div>
@@ -63,17 +37,17 @@ export default {
   name: 'app',
   data() {
     return {
-      searchword: null,
+      query: null,
     }
   },
   methods: { 
     searchMovie() {
-      const word = this.searchword
-      console.log(word)
+      const query = this.query
 
-      if (word) {
-        this.$router.push({name: 'search', params: {word: word}})
-        this.searchword = null
+      if (query) {
+        this.$router.push({name: 'search', params: {word:query}})
+        this.$router.go(this.$router.currentRoute)        
+        this.query = null
       } else {
         alert('검색어를 입력해주세요')
       }
@@ -81,7 +55,12 @@ export default {
     logout() {
       this.$store.dispatch('logout')
     },
-
+    goSignup() {
+      this.$router.push({name: 'signup'})
+    },
+    goLogin() {
+      this.$router.push({name: 'login'})
+    },
   }, 
   computed: {
     token() {
@@ -131,6 +110,7 @@ header {
   top: 206px;
   background: #F2F0EA;
   padding: 50px;
+  padding-top: 0;
 }
 
 .logoimg {
@@ -259,13 +239,6 @@ header {
 }
 
 .loginbtn {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 18px;
-  gap: 6px;
-
   width: 78px;
   height: 46px;
 
@@ -280,6 +253,10 @@ header {
   flex: none;
   order: 1;
   flex-grow: 0;
+  transform: scale(1.2);
+  transition-duration: 0.2s;
+  
+
 }
 
 button {
@@ -303,4 +280,24 @@ button {
   border: 1px solid #EFEEE6;
   border-radius: 100px;
 }
+
+.notoken {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+
+  width: 120px;
+  height: 40px;
+
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;  
+}
+
 </style>

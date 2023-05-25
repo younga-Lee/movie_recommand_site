@@ -27,10 +27,13 @@
         </div>
       </div> -->
       <div id="wishlist" class="border">
-        <h2>WishList</h2>
-        <div>
-          <br><br><br><br>
-        </div>
+        <WishList 
+        v-if="profileuser.likes_movies[0]"
+        :wishList="profileuser.likes_movies"
+        />
+        <NoWish 
+        v-if="!profileuser.likes_movies[0]"
+        />
       </div>
     </div>
     <!-- <div>
@@ -41,23 +44,30 @@
 
 <script>
 import axios from 'axios'
+import WishList from '@/components/ProfileView/WishList'
+import NoWish from '@/components/ProfileView/NoWish'
 const API_URL = 'http://127.0.0.1:8000'
 
 
 export default {
   name: 'ProfileView',
+  components: {
+    WishList,
+    NoWish
+  },
   data() {
     return {
-      API_URL: 'http://127.0.0.1:8000'
+      API_URL: 'http://127.0.0.1:8000',
+      profileuser: null,
     }
   },
   computed: {
     username() {
       return this.$route.params.username
     },    
-    profileuser() {
-      return this.$store.state.profileuser
-    },
+    // profileuser() {
+    //   return this.$store.state.profileuser
+    // },
     loginuser() {
       return this.$store.state.loginuser
     },
@@ -90,6 +100,7 @@ export default {
     getProfileuser() {
       const username = this.username
       this.$store.dispatch('getProfileuser', username)
+      this.profileuser = this.$store.state.profileuser
     },
     getLoginuser() {
       this.$store.dispatch('getLoginuser', this.$store.state.username)
@@ -97,6 +108,9 @@ export default {
   },
   created() {
     this.getProfileuser()
+    window.scrollTo(0,0)
+
+    // this.$router.go(this.$router.currentRoute)
     // console.log(this.$route.params.username)
   }
 }
