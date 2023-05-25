@@ -21,6 +21,7 @@ export default {
     goDetail() {
       // console.log(this.movie.pk)
       this.$router.push({name: 'detail', params: {id:`${this.movie.pk}`}})
+      window.scrollTo(0,0)
     }
   }
 }
