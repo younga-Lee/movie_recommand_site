@@ -15,6 +15,7 @@
 import axios from 'axios'
 import ResultView from '@/components/ResearchView/ResultView.vue'
 import NoResultView from '@/components/ResearchView/NoResultView.vue'
+const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'ResearchResultView',
@@ -31,29 +32,23 @@ export default {
     word() {
       return this.$route.params.word
     },
-
   },
   methods: {
     getResult() {
-      const word = this.word
-      const TMDB_API_KEY = process.env.VUE_APP_TMDB_API_KEY
+      const query = this.word
 
-      axios({
-        method: 'get',
-        url: `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}`,
-        params: {query: word, language: 'ko'},
-        // headers: {
-        //   accept: 'application/json',
-        //   Authorization: `Bearer ${TMDB_API_KEY}`
-        // }
+        axios({
+          method: 'get',
+          url: `${API_URL}/api/v1/movies/search/`,
+          params: {query:query}
         })
-      .then((res) => {
-        // console.log(res.data.results)
-        this.results = res.data.results
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((res) => {
+          this.results = res.data
+          // console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   created() {
