@@ -20,10 +20,37 @@
         </div>
       </div>
       <div class="twoline">
-        <div class="filter">
+        <div class="filter" @click="openModal">
           <img src="@/assets/filter_list.svg" alt="filterimg">
           <p>필터</p>
+        </div><!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Launch demo modal
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
         </div>
+        <!-- 모달 내용 -->
+        <!-- <div class="modal" v-if="showModal">
+          <p>모달 내용</p>
+          <button @click="closeModal">닫기</button>
+        </div> -->
         <div class="search">
           <form class="d-flex" role="search" @submit="searchMovie">
             <input id="searchinput" v-model="query" class="form-control me-2" type="search" placeholder="영화 제목 입력" aria-label="Search" maxlength="27">
@@ -45,9 +72,16 @@ export default {
   data() {
     return {
       query: null,
+      showModal: false,
     }
   },
   methods: { 
+    openModal(){
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
     searchMovie() {
       const query = this.query
 
@@ -108,6 +142,16 @@ left: 0px;
 top: 0px;
 
 background: #F2F0EA;
+}
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFFFFF;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .contents {
