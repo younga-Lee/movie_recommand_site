@@ -7,13 +7,30 @@ from .models import User
 from .serializers import UserProfileSerializer
 
 User = get_user_model()
-# Create your views here.
+#유저
 @api_view(['GET'])
 def user_detail(request, username):
     user = get_object_or_404(User, username=username)
     serializer = UserProfileSerializer(user)
     return Response(serializer.data)   
 
+#유저 수정
+@api_view(['PUT', 'GET'])
+def user_edit(request, username):
+    user = get_object_or_404(User, username=username)
+    serializer = UserProfileSerializer(user)
+    
+    if request.method == 'GET':
+        serializer = UserProfileSerializer(user)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = UserProfileSerializer(user, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        
+    
+#팔로우, 팔로워
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def follow(request, username):
@@ -27,24 +44,18 @@ def follow(request, username):
             person.followers.add(me)
             followed = True
         return Response(followed)
-    
-@api_view(['PUT'])
-def user_edit(request, username):
-    User = get_user_model()
-    user = get_object_or_404(User, username=username)
-    serializer = UserProfileSerializer(user)
 
-#좋아요
+#위시리스트
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def likes(request, username):
     person = get_object_or_404(User, username=username)
     me = request.user
     if person != me:
-        if person.likes_movies.filter(username=me.username).exists():
-            person.likes_movies.remove(me)
-            
+        if person.likes_users.filter(username=me.username).exists():
+            person.likes_users.remove(me)
+            liked = False
         else:
-            person.likes_movies.add(me)
-            
-        return Response(person.likes_movies)
+            person.likes_users.add(me)
+            liked = True
+        return Response(liked)

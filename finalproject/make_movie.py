@@ -17,7 +17,7 @@ def movie_get():
     # URL = 'https://api.themoviedb.org/3/movie/now_playing' 
     movie_list =[]
     
-    for i in range(1, 3): #데이터 1000개 불러오기 (한 페이지당 20개 있었음)
+    for i in range(1, 51): #데이터 1000개 불러오기 
         params = {
         'api_key': '837a5bfab43141b15658e475af9b943c',
         'language' : 'ko',
