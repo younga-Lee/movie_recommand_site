@@ -33,4 +33,18 @@ def user_edit(request, username):
     User = get_user_model()
     user = get_object_or_404(User, username=username)
     serializer = UserProfileSerializer(user)
-    
+
+#좋아요
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def likes(request, username):
+    person = get_object_or_404(User, username=username)
+    me = request.user
+    if person != me:
+        if person.likes_movies.filter(username=me.username).exists():
+            person.likes_movies.remove(me)
+            
+        else:
+            person.likes_movies.add(me)
+            
+        return Response(person.likes_movies)
