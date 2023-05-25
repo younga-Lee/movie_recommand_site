@@ -24,7 +24,12 @@ def user_edit(request, username):
         serializer = UserProfileSerializer(user)
         return Response(serializer.data)
     elif request.method == 'PUT':
-        serializer = UserProfileSerializer(user, data=request.data)
+        data = {
+            'password': request.data.get('password', user.password),
+            'image': request.data.get('image', user.image),
+            
+        }
+        serializer = UserProfileSerializer(user, data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
