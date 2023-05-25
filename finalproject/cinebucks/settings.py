@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'accounts',
     
     'rest_framework',
+    'django_filters', #필터기능
     
     # CORS policy
     'corsheaders', #프론트랑 연결하려면 이거 주석 해제
