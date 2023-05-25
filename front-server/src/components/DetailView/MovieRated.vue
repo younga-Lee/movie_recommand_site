@@ -20,10 +20,10 @@
         <input type="submit" value="등록하기">
       </form>
       <h3>코멘트 리스트</h3>
-      <div class="comment" v-for="comment in comments.slice().reverse()" :key="comment.id">
+      <div class="comment" v-for="comment in comments?.slice().reverse()" :key="comment.id">
         <p>내용 : {{ comment.comment_content }}</p>
         <p>평점 : {{ comment.rating }}</p>
-        <p>작성자 : {{ comment.username }}</p>
+        <p @click="goProfile(comment.username)">작성자 : {{ comment.username }}</p>
         <button v-if="comment.username == loginuser.username" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
           수정하기
         </button>
@@ -153,6 +153,10 @@ export default {
         console.log(err)
         console.log(comment_pk)
       })
+    },
+    goProfile(username) {
+      this.$router.push({name: 'profile', params: {username:username}})
+      this.$router.go(this.$router.currentRoute)
     }
   },
 }
