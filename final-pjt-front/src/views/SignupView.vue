@@ -111,7 +111,7 @@ order: 1;
 }
 
 .upbtn span {
-  width: 56px;
+  width: 70px;
   height: 22px;
 
   /* Text Button/Semibold Large */

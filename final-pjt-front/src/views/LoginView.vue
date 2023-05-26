@@ -23,7 +23,7 @@
           </div>
 
           <button class="upbtn">
-            <span>회원가입</span>
+            <span>로그인</span>
           </button>
         </div>
       </form>    
