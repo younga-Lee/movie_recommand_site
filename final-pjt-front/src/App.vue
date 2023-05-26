@@ -20,42 +20,37 @@
         </div>
       </div>
       <div class="twoline">
-        <div class="filter" @click="openModal">
+        <div class="filter">
           <img src="@/assets/filter_list.svg" alt="filterimg">
-          <p>필터</p>
-        </div><!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Launch demo modal
-        </button>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#commentMo">
+            <p>필터</p>
+          </button>
+          <div class="modal fade" id="commentMo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <span class="modal-title fs-5" id="commentLabel">필터</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modalbody">
+                  <div class="modalcontext">
+                    <p>장르</p>
+                    <div class="genres">
+                      <button>판타지</button>
+                      <button>공포</button>
+                      <button>모험</button>
+                      <button>역사</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- 모달 내용 -->
-        <!-- <div class="modal" v-if="showModal">
-          <p>모달 내용</p>
-          <button @click="closeModal">닫기</button>
-        </div> -->
         <div class="search">
           <form class="d-flex" role="search" @submit="searchMovie">
             <input id="searchinput" v-model="query" class="form-control me-2" type="search" placeholder="영화 제목 입력" aria-label="Search" maxlength="27">
             <img src="@/assets/search.svg" alt="search" id="searchbtn" @click="searchMovie">
-            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
           </form>        
         </div>
       </div>
@@ -72,16 +67,9 @@ export default {
   data() {
     return {
       query: null,
-      showModal: false,
     }
   },
   methods: { 
-    openModal(){
-      this.showModal = true;
-    },
-    closeModal() {
-      this.showModal = false;
-    },
     searchMovie() {
       const query = this.query
 
@@ -123,8 +111,99 @@ export default {
   /* text-align: center; */
   /* color: #2c3e50; */
   background-color: #F2F0EA !important;
-  height: 1653px;
+  height: 3000px;
 
+}
+
+.modalbody {
+  display: flex;
+flex-direction: column;
+/* align-items: flex-start; */
+padding: 24px 24px 40px;
+gap: 10px;
+
+width: 480px;
+height: 134px;
+/* overflow-y: scroll; */
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+}
+
+.modalcontext{
+display: flex;
+/* flex-direction: column; */
+/* align-items: flex-start; */
+padding: 0px;
+gap: 16px;
+
+width: 300px;
+height: 70px;
+
+
+/* Inside auto layout */
+
+/* flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0; */
+}
+
+.modalcontext p {
+width: 30px;
+height: 22px;
+
+/* MO/16/Bold */
+
+font-family: 'Spoqa Han Sans Neo';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height, or 133% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+#commentLabel {
+width: 45px;
+height: 32px;
+
+/* PC/24 */
+
+font-family: 'Spoqa Han Sans Neo';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 32px;
+/* identical to box height, or 133% */
+
+/* M3/sys/light/on-surface-variant */
+
+color: #49454F;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
 }
 
 header {
@@ -143,16 +222,6 @@ top: 0px;
 
 background: #F2F0EA;
 }
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #FFFFFF;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-}
 
 .contents {
 /* position: absolute; */
@@ -160,7 +229,6 @@ width: 1440px;
 height: 1447px;
 left: 0px;
 top: 206px;
-padding: 0 50px;
 }
 
 .logoimg {
@@ -309,6 +377,9 @@ padding: 0 50px;
 
 }
 
+.modalbody img {
+  width: 480px;
+}
 button {
   border: none;
 }
@@ -391,6 +462,7 @@ flex-grow: 0;
 .filter p {
   width: 30px;
   height: 22px;
+  margin-bottom: 0;
 
   /* MO/16/Bold */
 
