@@ -1,7 +1,7 @@
 <template>
-  <div> 
+  <div class="main"> 
     <p id="title">많이 본 영화</p>
-    <div class="container">
+    <div class="moviecontainer">
       <BaseCard 
       v-for="movie in manyseemovies.slice(23, 43)"
       :key="movie.pk"
@@ -10,7 +10,7 @@
     </div>
 
     <p id="title">현재 상영작</p>
-    <div class="container">
+    <div class="moviecontainer">
       <BoxCard 
       v-for="movie in boxmovies.slice(0, 21)"
       :key="movie.id"
@@ -19,7 +19,7 @@
     </div>
 
     <p id="title">평점 높은 순</p>
-    <div class="container">
+    <div class="moviecontainer">
       <PopCard 
       v-for="movie in popularmovies.slice(0,21)"
       :key="movie.pk"
@@ -28,7 +28,7 @@
     </div>
 
     <p id="title" v-if="token">[{{ username }}]님이 가장 많이 평가한 장르</p>
-    <div class="container" v-if="token">
+    <div class="moviecontainer" v-if="token">
       <PopCard 
       v-for="movie in popularmovies.slice(0,21)"
       :key="movie.pk"
@@ -106,11 +106,10 @@ export default {
   color: #00201A;
 }
 
-.container {
+.moviecontainer {
   display: flex;
   overflow-x: auto;
   /* white-space: nowrap; */
-  /* margin-bottom: 56px; */
   margin-bottom: 56px !important;
 }
 
@@ -124,4 +123,9 @@ h1 {
   text-align: left;
   margin-left: 120px;
 }
+
+.main {
+  padding-left: 156px;
+}
+
 </style>
