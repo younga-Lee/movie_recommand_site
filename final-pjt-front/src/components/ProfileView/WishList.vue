@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2>WishList</h2>
-    <a :href="url">하이</a>
     <div class="row row-cols-3 row-cols-md-4 g-4">
       <div class="col" v-for="movie in movielist" :key="movie.pk">
         <img v-if="movie.poster_path" :src="imgurl + movie.poster_path" class="card-img-top" alt="poster"
@@ -48,7 +47,7 @@ export default {
     }
   },
   created() {
-    // this.movielist = this.basemovies.filter(movie => this.wishList.includes(movie.pk))
+    this.movielist = this.basemovies.filter(movie => this.wishList.includes(movie.pk))
     this.getProfileuser()
     // this.$router.go(this.$router.currentRoute)        
 
