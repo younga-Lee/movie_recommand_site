@@ -15,8 +15,10 @@
         <img src="@/assets/editbutton.svg" alt="edit" @click="goEdit" class="editimg" v-if="loginuser.username == profileuser.username">
         <img src="@/assets/followbtn.svg" alt="follow" @click="follow" class="editimg" 
         v-if="loginuser.username != profileuser.username && !loginuser.followings.includes(profileuser.id)">
+        <img src="@/assets/unfollow.svg" alt="follow" @click="follow" class="editimg" 
+        v-if="loginuser.username != profileuser.username && loginuser.followings.includes(profileuser.id)">
       </div>
-      <div id="wishlist" class="border">
+      <div id="wishlist">
         <WishList 
         v-if="profileuser.likes_movies[0]"
         :wishList="wishlist"
@@ -26,9 +28,6 @@
         />
       </div>
     </div>
-    <!-- <div>
-      <h1>없는 회원입니다</h1>
-    </div> -->
   </div>
 </template>
 
@@ -101,11 +100,12 @@ export default {
     }
   },
   created() {
-    // this.getProfileuser()
+    this.getProfileuser()
     window.scrollTo(0,0)
     this.profileuser = this.$store.state.profileuser
+    this.getLoginuser()
 
-    // this.getWishlist()
+    this.getWishlist()
     // this.$router.go(this.$router.currentRoute)
     // console.log(this.$route.params.username)
   }
